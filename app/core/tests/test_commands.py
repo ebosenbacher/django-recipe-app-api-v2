@@ -18,7 +18,7 @@ class CommandTests(SimpleTestCase):
         """Test waiting for the database if the database is ready."""
 
         patched_check.return_value = True
-        
+
         call_command('wait_for_db')
 
         patched_check.assert_called_once_with(databases=['default'])
@@ -30,9 +30,8 @@ class CommandTests(SimpleTestCase):
         # side effect, simulating exceptions
         patched_check.side_effect = [Psycopg2OperationalError] * 2 + \
             [OperationalError] * 3 + [True]
-            
-        call_command('wait_for_db')    
+
+        call_command('wait_for_db')
 
         self.assertEqual(patched_check.call_count, 6)
         patched_check.assert_called_with(databases=['default'])
-        
