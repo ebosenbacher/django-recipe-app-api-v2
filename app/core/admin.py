@@ -27,6 +27,20 @@ class UserAdmin(BaseUserAdmin):
         (_("Additional information"), {'fields': ('last_login',)}),
     )
     readonly_fields = ['last_login']
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': (
+                'email',
+                'password1',
+                'password2',
+                'name',
+                'is_active',
+                'is_staff',
+                'is_superuser',
+            )
+        }),
+    )
 
 
 # NOTE: second argument is to specify that we use t
