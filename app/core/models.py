@@ -17,6 +17,7 @@ class UserManager(BaseUserManager):
         """Create, save and return a new user."""
         if not email:
             raise ValueError('User must have an email address')
+
         normalized_email = self.normalize_email(email=email)
         # create user
         user = self.model(
@@ -28,6 +29,20 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
+
+    def create_superuser(self, email, password):
+        """Create and return a new superuser."""
+        superuser = self.create_user(
+            email=email,
+            password=password
+        )
+        # allows login to the admin panel
+        superuser.is_staff = True
+        # allows to perform all operations in the admin panel
+        superuser.is_superuser = True
+        superuser.save(using=self._db)
+
+        return superuser
 
 
 class user(AbstractBaseUser, PermissionsMixin):
