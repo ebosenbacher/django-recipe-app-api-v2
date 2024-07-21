@@ -31,19 +31,23 @@ class ModelTests(TestCase):
         for email, expaected in sample_emails:
             user = get_user_model().objects.create_user(
                 email=email,
-                password='samplepassword123')
+                password='samplepassword123',
+            )
             self.assertEqual(user.email, expaected)
 
     def test_new_user_without_email_raises_error(self):
         """Test that creating a user without an email raises a ValueError."""
         with self.assertRaises(ValueError):
-            get_user_model().objects.create_user('', 'samplepassword123')
+            get_user_model().objects.create_user(
+                email='',
+                password='samplepassword123',
+            )
 
     def test_create_superuser(self):
         """Test creating a superuser."""
         superuser = get_user_model().objects.create_superuser(
-            'test@example.com',
-            'testpassword123'
+            email='test@example.com',
+            password='testpassword123',
         )
 
         # allows login to the admin dashboard
