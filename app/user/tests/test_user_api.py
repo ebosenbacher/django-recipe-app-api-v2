@@ -41,7 +41,8 @@ class PublicUserApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(email=payload['email'])
         self.assertTrue(user.check_password(payload['password']))
-        # security check that the API is not sending back the password in the response payload
+        # security check that the API is not sending
+        # back the password in the response payload
         self.assertNotIn('password', res.data)
 
     def test_user_with_email_exists_error(self):
@@ -58,7 +59,8 @@ class PublicUserApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_password_too_short_error(self):
-        """Test an error is returned if password is too short or less than 5 chars."""
+        """Test an error is returned if password is too short
+            or less than 5 chars."""
 
         payload = {
             'email': 'test@example.com',
